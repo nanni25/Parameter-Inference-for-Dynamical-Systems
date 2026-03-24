@@ -762,6 +762,26 @@
       <!-- Parameters for mean -->
       <parameter id="y_5653871" name="Mean of Lac" value="0.0" constant="false"/>
       <parameter id="y2_5653871" name="Second Moment of Lac" value="0.0" constant="false"/>
+      <parameter id="y_205687" name="Mean of UDP" value="0.0" constant="false"/>
+      <parameter id="y2_205687" name="Second Moment of UDP" value="0.0" constant="false"/>
+      <parameter id="y_425969" name="Mean of H+" value="0.0" constant="false"/>
+      <parameter id="y2_425969" name="Second Moment of H+" value="0.0" constant="false"/>
+      <parameter id="y_964746" name="Mean of Glc [Golgi lumen]" value="0.0" constant="false"/>
+      <parameter id="y2_964746" name="Second Moment of Glc [Golgi lumen]" value="0.0" constant="false"/>
+      <parameter id="y_735682" name="Mean of UDP-Gal" value="0.0" constant="false"/>
+      <parameter id="y2_735682" name="Second Moment of UDP-Gal" value="0.0" constant="false"/>
+      <parameter id="y_70113" name="Mean of Glc [cytosol]" value="0.0" constant="false"/>
+      <parameter id="y2_70113" name="Second Moment of Glc [cytosol]" value="0.0" constant="false"/>
+      <parameter id="y_528072" name="Mean of B4GALT1" value="0.0" constant="false"/>
+      <parameter id="y2_528072" name="Second Moment of B4GALT1" value="0.0" constant="false"/>
+      <parameter id="y_5653896" name="Mean of LALBA" value="0.0" constant="false"/>
+      <parameter id="y2_5653896" name="Second Moment of LALBA" value="0.0" constant="false"/>
+      <parameter id="y_5653885" name="Mean of B4GALT1:LALBA" value="0.0" constant="false"/>
+      <parameter id="y2_5653885" name="Second Moment of B4GALT1:LALBA" value="0.0" constant="false"/>
+      <parameter id="y_5653881" name="Mean of SLC2A1 tetramer" value="0.0" constant="false"/>
+      <parameter id="y2_5653881" name="Second Moment of SLC2A1 tetramer" value="0.0" constant="false"/>
+      <parameter id="y_5653875" name="Mean of Mn2+" value="0.0" constant="false"/>
+      <parameter id="y2_5653875" name="Second Moment of Mn2+" value="0.0" constant="false"/>
     </listOfParameters>
 
     <listOfRules>
@@ -793,6 +813,36 @@
           </apply>
         </math>
       </rateRule>
+
+      <rateRule variable="y_205687"><math xmlns="http://www.w3.org/1998/Math/MathML"><apply><divide/><apply><minus/><ci>species_205687</ci><ci>y_205687</ci></apply><apply><plus/><csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time">time</csymbol><cn type="e-notation">1<sep/>-6</cn></apply></apply></math></rateRule>
+      <rateRule variable="y2_205687"><math xmlns="http://www.w3.org/1998/Math/MathML"><apply><divide/><apply><minus/><apply><power/><ci>species_205687</ci><cn>2</cn></apply><ci>y2_205687</ci></apply><apply><plus/><csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time">time</csymbol><cn type="e-notation">1<sep/>-6</cn></apply></apply></math></rateRule>
+
+      <rateRule variable="y_425969"><math xmlns="http://www.w3.org/1998/Math/MathML"><apply><divide/><apply><minus/><ci>species_425969</ci><ci>y_425969</ci></apply><apply><plus/><csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time">time</csymbol><cn type="e-notation">1<sep/>-6</cn></apply></apply></math></rateRule>
+      <rateRule variable="y2_425969"><math xmlns="http://www.w3.org/1998/Math/MathML"><apply><divide/><apply><minus/><apply><power/><ci>species_425969</ci><cn>2</cn></apply><ci>y2_425969</ci></apply><apply><plus/><csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time">time</csymbol><cn type="e-notation">1<sep/>-6</cn></apply></apply></math></rateRule>
+
+      <rateRule variable="y_964746"><math xmlns="http://www.w3.org/1998/Math/MathML"><apply><divide/><apply><minus/><ci>species_964746</ci><ci>y_964746</ci></apply><apply><plus/><csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time">time</csymbol><cn type="e-notation">1<sep/>-6</cn></apply></apply></math></rateRule>
+      <rateRule variable="y2_964746"><math xmlns="http://www.w3.org/1998/Math/MathML"><apply><divide/><apply><minus/><apply><power/><ci>species_964746</ci><cn>2</cn></apply><ci>y2_964746</ci></apply><apply><plus/><csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time">time</csymbol><cn type="e-notation">1<sep/>-6</cn></apply></apply></math></rateRule>
+
+      <rateRule variable="y_735682"><math xmlns="http://www.w3.org/1998/Math/MathML"><apply><divide/><apply><minus/><ci>species_735682</ci><ci>y_735682</ci></apply><apply><plus/><csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time">time</csymbol><cn type="e-notation">1<sep/>-6</cn></apply></apply></math></rateRule>
+      <rateRule variable="y2_735682"><math xmlns="http://www.w3.org/1998/Math/MathML"><apply><divide/><apply><minus/><apply><power/><ci>species_735682</ci><cn>2</cn></apply><ci>y2_735682</ci></apply><apply><plus/><csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time">time</csymbol><cn type="e-notation">1<sep/>-6</cn></apply></apply></math></rateRule>
+
+      <rateRule variable="y_70113"><math xmlns="http://www.w3.org/1998/Math/MathML"><apply><divide/><apply><minus/><ci>species_70113</ci><ci>y_70113</ci></apply><apply><plus/><csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time">time</csymbol><cn type="e-notation">1<sep/>-6</cn></apply></apply></math></rateRule>
+      <rateRule variable="y2_70113"><math xmlns="http://www.w3.org/1998/Math/MathML"><apply><divide/><apply><minus/><apply><power/><ci>species_70113</ci><cn>2</cn></apply><ci>y2_70113</ci></apply><apply><plus/><csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time">time</csymbol><cn type="e-notation">1<sep/>-6</cn></apply></apply></math></rateRule>
+
+      <rateRule variable="y_528072"><math xmlns="http://www.w3.org/1998/Math/MathML"><apply><divide/><apply><minus/><ci>species_528072</ci><ci>y_528072</ci></apply><apply><plus/><csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time">time</csymbol><cn type="e-notation">1<sep/>-6</cn></apply></apply></math></rateRule>
+      <rateRule variable="y2_528072"><math xmlns="http://www.w3.org/1998/Math/MathML"><apply><divide/><apply><minus/><apply><power/><ci>species_528072</ci><cn>2</cn></apply><ci>y2_528072</ci></apply><apply><plus/><csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time">time</csymbol><cn type="e-notation">1<sep/>-6</cn></apply></apply></math></rateRule>
+
+      <rateRule variable="y_5653896"><math xmlns="http://www.w3.org/1998/Math/MathML"><apply><divide/><apply><minus/><ci>species_5653896</ci><ci>y_5653896</ci></apply><apply><plus/><csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time">time</csymbol><cn type="e-notation">1<sep/>-6</cn></apply></apply></math></rateRule>
+      <rateRule variable="y2_5653896"><math xmlns="http://www.w3.org/1998/Math/MathML"><apply><divide/><apply><minus/><apply><power/><ci>species_5653896</ci><cn>2</cn></apply><ci>y2_5653896</ci></apply><apply><plus/><csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time">time</csymbol><cn type="e-notation">1<sep/>-6</cn></apply></apply></math></rateRule>
+
+      <rateRule variable="y_5653885"><math xmlns="http://www.w3.org/1998/Math/MathML"><apply><divide/><apply><minus/><ci>species_5653885</ci><ci>y_5653885</ci></apply><apply><plus/><csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time">time</csymbol><cn type="e-notation">1<sep/>-6</cn></apply></apply></math></rateRule>
+      <rateRule variable="y2_5653885"><math xmlns="http://www.w3.org/1998/Math/MathML"><apply><divide/><apply><minus/><apply><power/><ci>species_5653885</ci><cn>2</cn></apply><ci>y2_5653885</ci></apply><apply><plus/><csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time">time</csymbol><cn type="e-notation">1<sep/>-6</cn></apply></apply></math></rateRule>
+
+      <rateRule variable="y_5653881"><math xmlns="http://www.w3.org/1998/Math/MathML"><apply><divide/><apply><minus/><ci>species_5653881</ci><ci>y_5653881</ci></apply><apply><plus/><csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time">time</csymbol><cn type="e-notation">1<sep/>-6</cn></apply></apply></math></rateRule>
+      <rateRule variable="y2_5653881"><math xmlns="http://www.w3.org/1998/Math/MathML"><apply><divide/><apply><minus/><apply><power/><ci>species_5653881</ci><cn>2</cn></apply><ci>y2_5653881</ci></apply><apply><plus/><csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time">time</csymbol><cn type="e-notation">1<sep/>-6</cn></apply></apply></math></rateRule>
+
+      <rateRule variable="y_5653875"><math xmlns="http://www.w3.org/1998/Math/MathML"><apply><divide/><apply><minus/><ci>species_5653875</ci><ci>y_5653875</ci></apply><apply><plus/><csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time">time</csymbol><cn type="e-notation">1<sep/>-6</cn></apply></apply></math></rateRule>
+      <rateRule variable="y2_5653875"><math xmlns="http://www.w3.org/1998/Math/MathML"><apply><divide/><apply><minus/><apply><power/><ci>species_5653875</ci><cn>2</cn></apply><ci>y2_5653875</ci></apply><apply><plus/><csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time">time</csymbol><cn type="e-notation">1<sep/>-6</cn></apply></apply></math></rateRule>
     </listOfRules>
 
     <listOfReactions>
@@ -891,8 +941,8 @@
                   <apply> <power/> <ci> species_5653885 </ci> <cn> 10 </cn> </apply>
                 </apply>
               </apply>
-              <ci> species_964746 </ci> 
-              <ci> species_735682 </ci> 
+              <ci> species_964746 </ci>
+              <ci> species_735682 </ci>
             </apply>
           </math>
         </kineticLaw>
