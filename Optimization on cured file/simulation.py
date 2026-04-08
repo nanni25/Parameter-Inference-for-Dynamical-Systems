@@ -19,7 +19,7 @@ def evaluate_loss(theta, target_dict):
     simulated_y = np.array(result)
 
     # Calculate the mean of the simulation over time
-    simulated_means = np.mean(simulated_y, axis=0)
+    simulated_means = simulated_y[-1]
     
     # Extract the target values from the dictionary
     target_values = []
