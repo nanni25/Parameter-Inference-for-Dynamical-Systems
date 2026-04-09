@@ -113,7 +113,8 @@ def modify_sbml(input_file, output_file):
         reacts = ET.SubElement(rxn, 'listOfReactants')
         ET.SubElement(reacts, 'speciesReference', {'species': s, 'stoichiometry': '1', 'constant': 'true'})
         kl = ET.SubElement(rxn, 'kineticLaw')
-        kl.append(ET.fromstring(f'<math xmlns="{math_ns}"><ci>K_out_{id_num}</ci></math>'))
+        # Changed to first-order mass action to prevent concentrations dropping below zero
+        kl.append(ET.fromstring(f'<math xmlns="{math_ns}"><apply><times/><ci>K_out_{id_num}</ci><ci>{s}</ci></apply></math>'))
 
     tree.write(output_file, encoding='utf-8', xml_declaration=True)
     print(f"Successfully cured SBML and saved to: {output_file}")
