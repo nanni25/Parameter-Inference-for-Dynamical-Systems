@@ -10,11 +10,8 @@ def evaluate_loss(rr, theta, target_dict, params_to_optimize, mean_variables, si
         rr.setValue(param_id, param_val)
         
     try:
-        # Attempt to run the numerical integration
         result = rr.simulate(0, sim_time, steps=sim_steps)
     except RuntimeError:
-        # If CVODE fails due to mathematically unstable parameter combinations,
-        # return a massive penalty loss to kill off this candidate in the population.
         return 1e9
         
     simulated_y = np.array(result)

@@ -4,8 +4,6 @@ from groq import Groq
 import os
 # --- CONFIGURATION ---
 API_KEY = os.environ.get("GROQ_API_KEY") # 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"
-SBML_FILE_PATH = "Models/R-HSA-5653890.sbml"
-OUTPUT_JSON_PATH = "targets.json"
 
 def extract_species_from_sbml(file_path):
 
@@ -69,9 +67,14 @@ def query_groq_for_targets(species_list, api_key):
     return chat_completion.choices[0].message.content
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--input_sbml", required=True)
+    parser.add_argument("--output_json", required=True)
+    args = parser.parse_args()
 
     # 1. Extract data from the SBML file
-    species_list = extract_species_from_sbml(SBML_FILE_PATH)
+    species_list = extract_species_from_sbml(args.input_sbml)
     
     if not species_list:
         print("No species found. Exiting.")
@@ -84,10 +87,10 @@ def main():
         # 3. Parse and save the results
         targets = json.loads(json_response)
         
-        with open(OUTPUT_JSON_PATH, "w") as f:
+        with open(args.output_json, "w") as f:
             json.dump(targets, f, indent=4)
             
-        print(f"\nSuccess! Saved target estimates to {OUTPUT_JSON_PATH}")
+        print(f"\nSuccess! Saved target estimates to {args.output_json}")
         print(json.dumps(targets, indent=2))
         
     except Exception as e:

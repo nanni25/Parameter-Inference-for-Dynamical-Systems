@@ -119,4 +119,10 @@ def modify_sbml(input_file, output_file):
     print(f"Successfully cured SBML and saved to: {output_file}")
 
 if __name__ == "__main__":
-    modify_sbml("Models/R-HSA-5653890_Original.sbml", "Models/R-HSA-5653890.sbml")
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--input_sbml", required=True)
+    parser.add_argument("--output_sbml", required=True)
+    args = parser.parse_args()
+    
+    modify_sbml(args.input_sbml, args.output_sbml)

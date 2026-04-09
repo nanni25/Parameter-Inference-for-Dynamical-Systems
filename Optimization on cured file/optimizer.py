@@ -1,29 +1,31 @@
 import numpy as np
 import json
 import roadrunner
+import argparse
 from simulation import evaluate_loss
 from visualization import plot_results, plot_timeline
 
-# --- CONFIGURATION ---
-MODEL_PATH = "Models/R-HSA-5653890_Modified.sbml"
-
-SIMULATION_TIME = 100.0  
-SIMULATION_STEPS = 100   
-POPULATION_SIZE = 100      
-NUM_GENERATIONS = 500      
-LEARNING_RATE = 0.1       
-SIGMA = 0.1
-
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--model_path", required=True)
+    parser.add_argument("--targets_path", required=True)
+    parser.add_argument("--sim_time", type=float, required=True)
+    parser.add_argument("--sim_steps", type=int, required=True)
+    parser.add_argument("--pop_size", type=int, required=True)
+    parser.add_argument("--generations", type=int, required=True)
+    parser.add_argument("--learning_rate", type=float, required=True)
+    parser.add_argument("--sigma", type=float, required=True)
+    args = parser.parse_args()
+
     np.random.seed(11)
 
     print("Loading target values from LLM...")
-    with open("targets.json", "r") as f:
+    with open(args.targets_path, "r") as f:
         targets = json.load(f)
 
     # Initialize Engine Once
     print("Compiling SBML in libRoadRunner...")
-    rr = roadrunner.RoadRunner(MODEL_PATH)
+    rr = roadrunner.RoadRunner(args.model_path)
 
     all_sbml_params = rr.model.getGlobalParameterIds()
     PARAMS_TO_OPTIMIZE = [
@@ -37,7 +39,7 @@ def main():
 
     num_params = len(PARAMS_TO_OPTIMIZE)
     theta = np.zeros(num_params) 
-    half_pop = POPULATION_SIZE // 2 
+    half_pop = args.pop_size // 2 
     
     m = np.zeros(num_params)
     v = np.zeros(num_params)
@@ -45,29 +47,29 @@ def main():
     
     history_best_loss, history_mean_loss = [], []
     
-    print(f"Starting for {NUM_GENERATIONS} gens. Pop Size: {POPULATION_SIZE}")
+    print(f"Starting for {args.generations} gens. Pop Size: {args.pop_size}")
     
-    for epoch in range(NUM_GENERATIONS):
-        decay_factor = np.exp(-3.0 * (epoch / NUM_GENERATIONS)) 
-        current_lr = LEARNING_RATE * decay_factor
-        current_sigma = max(SIGMA * decay_factor, 0.001) 
+    for epoch in range(args.generations):
+        decay_factor = np.exp(-3.0 * (epoch / args.generations)) 
+        current_lr = args.learning_rate * decay_factor
+        current_sigma = max(args.sigma * decay_factor, 0.001) 
         
         noise = np.random.randn(half_pop, num_params) 
         epsilons = np.concatenate([noise, -noise]) 
         
-        raw_losses = np.zeros(POPULATION_SIZE)
-        for i in range(POPULATION_SIZE):
+        raw_losses = np.zeros(args.pop_size)
+        for i in range(args.pop_size):
             theta_try = theta + current_sigma * epsilons[i]
             # Pass everything to simulation module
             raw_losses[i] = evaluate_loss(
                 rr, theta_try, targets, PARAMS_TO_OPTIMIZE, 
-                MEAN_VARIABLES, SIMULATION_TIME, SIMULATION_STEPS
+                MEAN_VARIABLES, args.sim_time, args.sim_steps
             )
             
-        losses = np.zeros(POPULATION_SIZE)
-        losses[np.argsort(raw_losses)] = np.linspace(0.5, -0.5, POPULATION_SIZE)
+        losses = np.zeros(args.pop_size)
+        losses[np.argsort(raw_losses)] = np.linspace(0.5, -0.5, args.pop_size)
         
-        step = np.dot(losses, epsilons) / (POPULATION_SIZE * current_sigma)
+        step = np.dot(losses, epsilons) / (args.pop_size * current_sigma)
         g = -step
         
         m = beta1 * m + (1 - beta1) * g
@@ -83,7 +85,7 @@ def main():
         history_mean_loss.append(mean_loss)
         
         if (epoch + 1) % 10 == 0:
-            print(f"Gen {epoch+1:03d}/{NUM_GENERATIONS} | LR: {current_lr:.4f} | Sig: {current_sigma:.4f} | Best Loss: {min_loss:.6f}")
+            print(f"Gen {epoch+1:03d}/{args.generations} | LR: {current_lr:.4f} | Sig: {current_sigma:.4f} | Best Loss: {min_loss:.6f}")
         
     print("\nOptimization Complete:")
     final_params = 10 ** theta
@@ -98,7 +100,7 @@ def main():
     for param_id, param_val in zip(PARAMS_TO_OPTIMIZE, final_params):
         rr.setValue(param_id, param_val)
         
-    result = rr.simulate(0, SIMULATION_TIME, steps=SIMULATION_STEPS)
+    result = rr.simulate(0, args.sim_time, steps=args.sim_steps)
     simulated_means = np.array(result)[-1]
 
     target_values = [targets[var.replace("y_", "species_")] for var in MEAN_VARIABLES]
@@ -108,9 +110,9 @@ def main():
     for var, target_val, sim_val in zip(MEAN_VARIABLES, target_values, simulated_means):
         print(f"{var:<18} | {target_val:<12.6f} | {sim_val:.6f}")
 
-    # plot_results(history_best_loss, history_mean_loss, MEAN_VARIABLES, target_values, simulated_means)
+    plot_results(history_best_loss, history_mean_loss, MEAN_VARIABLES, target_values, simulated_means)
 
-    # plot_timeline(final_params, targets, MODEL_PATH, PARAMS_TO_OPTIMIZE, MEAN_VARIABLES, SIMULATION_TIME, SIMULATION_STEPS)
+    plot_timeline(final_params, targets, args.model_path, PARAMS_TO_OPTIMIZE, MEAN_VARIABLES, args.sim_time, args.sim_steps)
 
 if __name__ == "__main__":
     main()
