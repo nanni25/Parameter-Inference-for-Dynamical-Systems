@@ -3,8 +3,7 @@ import json
 from groq import Groq
 import os
 # --- CONFIGURATION ---
-API_KEY = os.environ.get("GROQ_API_KEY") # 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"
-
+API_KEY = os.environ.get("GROQ_API_KEY") 
 def extract_species_from_sbml(file_path):
 
     print(f"Extracting biological data from {file_path}...")
