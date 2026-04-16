@@ -2,6 +2,7 @@ import argparse
 import subprocess
 import sys
 import os
+import json
 
 def run_pipeline(args):
     print("========================================")
@@ -59,20 +60,26 @@ def run_pipeline(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run the SBML Optimization Pipeline.")
     
-    # File handling
-    parser.add_argument("--input_model", type=str, required=True, help="Path to the original SBML file.")
-    parser.add_argument("--cured_dir", type=str, default="Cured Models", help="Directory to save cured models.")
-    parser.add_argument("--targets_dir", type=str, default="Targets", help="Directory to save target JSON files.")
+    # Take a single config file instead of all hyperparameters
+    parser.add_argument(
+        "--config", 
+        type=str, 
+        default=os.path.join("Configurations", "config.json"), 
+        help="Path to the JSON configuration file."
+    )
     
-    # Optimizer Hyperparameters
-    parser.add_argument("--sim_time", type=float, default=1000.0, help="Total simulation time.")
-    parser.add_argument("--sim_steps", type=int, default=1000, help="Number of simulation steps.")
-    parser.add_argument("--pop_size", type=int, default=100, help="Population size for the optimizer.")
-    parser.add_argument("--generations", type=int, default=500, help="Number of optimization generations.")
-    parser.add_argument("--learning_rate", type=float, default=0.05, help="Learning rate.")
-    parser.add_argument("--sigma", type=float, default=0.05, help="Exploration variance (sigma).")    
-    parser.add_argument("--patience", type=int, default=50, help="Generations to wait for improvement before stopping.")
-    parser.add_argument("--min_delta", type=float, default=1e-5, help="Minimum decrease in loss to count as improvement.")
+    initial_args = parser.parse_args()
     
-    args = parser.parse_args()
+    # Validate that the config file exists
+    if not os.path.exists(initial_args.config):
+        print(f"[ERROR] Configuration file not found at: {initial_args.config}")
+        sys.exit(1)
+        
+    # Load the JSON data
+    with open(initial_args.config, "r") as f:
+        config_data = json.load(f)
+        
+    # Convert the dictionary back into an object to maintain compatibility with run_pipeline
+    args = argparse.Namespace(**config_data)
+    
     run_pipeline(args)

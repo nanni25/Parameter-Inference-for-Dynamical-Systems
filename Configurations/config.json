@@ -1,0 +1,13 @@
+{
+    "input_model": "Models/R-HSA-5653890_Original.sbml",
+    "cured_dir": "Cured Models",
+    "targets_dir": "Targets",
+    "sim_time": 1000.0,
+    "sim_steps": 1000,
+    "pop_size": 100,
+    "generations": 500,
+    "learning_rate": 0.05,
+    "sigma": 0.05,
+    "patience": 50,
+    "min_delta": 1e-05
+}
